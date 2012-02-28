@@ -1,9 +1,18 @@
+# flymake-coffeescript.el
 
 A flymake configuration for CoffeeScript
 
 ## Install
 
-In your emacs configuration,
+In your shell,
+
+```sh
+$ cd <your_emacs_load_path>
+$ wget https://github.com/kui/flymake-coffeescript/raw/master/flymake-coffeescript.el
+$ emacs ~/.emacs
+```
+
+In your `.emacs`,
 
 ```el
 (when (and (require 'flymake nil t)
