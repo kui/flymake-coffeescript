@@ -1,6 +1,6 @@
-;; -*- coding:utf-8-unix; mode:emacs-lisp-mode; -*-
+;; -*- coding:utf-8-unix; mode:emacs-lisp; -*-
 ;;
-;; A flymake configure for CoffeeScript
+;; A flymake configure for CoffeeScript and Cakefile
 ;;
 ;; ## Sample
 ;; ```
@@ -13,7 +13,12 @@
 
 (defvar flymake-coffeescript-command 
   "coffee"
-  "coffeescript command name")
+  "coffeescript command")
+
+(defvar flymake-cake-command 
+  "cake"
+  "cake command")
+
 (defvar flymake-coffeescript-err-line-patterns
   '(("^\\([^[:space:]]*Error: In \\(.+?\\), .+? on line \\([0-9]+\\).*\\)$"
      2 3 nil 1)
@@ -22,8 +27,11 @@
     ("^\\([^[:space:]]*Error: .+?\\)$"
      nil nil nil 1)
     ))
+
 (defvar flymake-coffeescript-allowed-file-name-masks
-  '(("\\.coffee\\'" flymake-coffeescript-init)))
+  '(("\\.coffee\\'" flymake-coffeescript-init)
+    ("Cakefile" flymake-cakefile-init)
+    ))
 
 (defun flymake-coffeescript-init ()
   (let* ((temp-file (flymake-init-create-temp-buffer-copy
@@ -32,6 +40,15 @@
 		      temp-file
 		      (file-name-directory buffer-file-name))))
     (list flymake-coffeescript-command (list "-p" local-file))))
+
+(defun flymake-cakefile-init ()
+  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+		     'flymake-create-temp-inplace))
+	 (local-file (file-relative-name
+		      temp-file
+		      (file-name-directory buffer-file-name))))
+    (list flymake-cake-command (list ))))
+
 (defun flymake-coffeescript-load ()
   (interactive)
   (set (make-local-variable 'flymake-allowed-file-name-masks) 
